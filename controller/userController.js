@@ -30,3 +30,68 @@ export const createUser = async (req, res) => {
     message: "new User created sucessfully",
   });
 };
+
+export const updateUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  //find data using primary key
+
+  const userId = req.params.id;
+
+  await prisma.user.update({
+    where: {
+      id: Number(userId),
+    },
+    data: {
+      name,
+      email,
+      password,
+    },
+  });
+
+  return res.json({
+    status: 200,
+    data: updateUser,
+    message: "User updated sucessfully",
+  });
+};
+
+export const fetchUsers = async (req, res) => {
+  const users = await prisma.user.findMany({});
+
+  return res.json({
+    status: 200,
+    data: users,
+    message: "Users fetched sucessfully",
+  });
+};
+
+export const fetchUserById = async (req, res) => {
+  const userId = req.params.id;
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: Number(userId),
+    },
+  });
+
+  return res.json({
+    status: 200,
+    data: user,
+    message: "User fetched sucessfully",
+  });
+};
+
+export const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+  await prisma.user.delete({
+    where: {
+      id: Number(userId),
+    },
+  });
+  return res.json({
+    status: 200,
+
+    message: "User deleted sucessfully",
+  });
+};
