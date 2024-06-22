@@ -55,7 +55,7 @@ export const updateUser = async (req, res) => {
 
   return res.json({
     status: 200,
-
+    data: updateUser,
     message: "User updated sucessfully",
   });
 };
@@ -63,16 +63,7 @@ export const updateUser = async (req, res) => {
 // fetch users
 
 export const fetchUsers = async (req, res) => {
-  const users = await prisma.user.findMany({
-    include: {
-      post: {
-        select: {
-          title: true,
-          comment_count: true,
-        },
-      },
-    },
-  });
+  const users = await prisma.user.findMany({});
 
   return res.json({
     status: 200,
@@ -87,9 +78,6 @@ export const fetchUserById = async (req, res) => {
   const userId = req.params.id;
 
   const user = await prisma.user.findFirst({
-    include: {
-      post: true,
-    },
     where: {
       id: Number(userId),
     },

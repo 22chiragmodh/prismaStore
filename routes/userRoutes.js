@@ -1,4 +1,5 @@
 import { Router } from "express";
+const router = Router();
 
 import {
   createUser,
@@ -7,7 +8,6 @@ import {
   fetchUserById,
   deleteUser,
 } from "../controller/userController.js";
-const router = Router();
 
 router.post("/createUser", createUser);
 router.put("/updateUser/:id", updateUser);
